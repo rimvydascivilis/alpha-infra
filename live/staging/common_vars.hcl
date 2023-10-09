@@ -1,6 +1,5 @@
 locals {
-  // TODO: Create regex to get env from module path (e.g. "dev", "staging", "prod")
-  env = "dev"
+  env = regex(".*/(.*)", get_terragrunt_dir())[0]
 
   common_tags = {
     "Environment" = local.env
