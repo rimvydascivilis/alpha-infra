@@ -1,4 +1,12 @@
-projects:
-- name: staging
-  dir: live/staging
-  terragrunt: true
+generate_projects:
+  terragrunt_parsing:
+    parallel: true
+    createProjectName: true
+    createWorkspace: true
+    defaultWorkflow: default
+workflows:
+  default:
+    plan:
+      steps:
+        - init
+        - plan
