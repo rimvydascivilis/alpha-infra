@@ -1,7 +1,3 @@
-data "aws_iam_openid_connect_provider" "this" {
-  arn = var.openid_provider_arn
-}
-
 data "aws_iam_policy_document" "cluster_autoscaler" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
