@@ -18,6 +18,10 @@ inputs = {
 
   enable_cluster_autoscaler       = true
   cluster_autoscaler_helm_version = "9.29.3"
+
+  enable_load_balancer_controller       = true
+  load_balancer_controller_helm_version = "1.6.1"
+  load_balancer_controller_image_tag    = "v2.6.1"
 }
 
 dependency "eks" {

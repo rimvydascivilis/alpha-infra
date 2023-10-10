@@ -23,3 +23,19 @@ variable "openid_provider_arn" {
   description = "IAM Openid Connect Provider ARN"
   type        = string
 }
+
+variable "enable_load_balancer_controller" {
+  description = "Determines whether to deploy load balancer controller"
+  type        = bool
+  default     = false
+}
+
+variable "load_balancer_controller_helm_version" {
+  description = "Load Balancer Controller Helm verion"
+  type        = string
+}
+
+variable "load_balancer_controller_image_tag" {
+  description = "Load Balancer Controller image tag"
+  type        = string
+}
