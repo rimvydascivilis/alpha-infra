@@ -31,6 +31,7 @@ inputs = {
   azs             = dependency.data.outputs.first_3_azs
   private_subnets = [for k, v in dependency.data.outputs.first_3_azs : cidrsubnet(local.vpc_cidr_block, 8, k)]
   public_subnets  = [for k, v in dependency.data.outputs.first_3_azs : cidrsubnet(local.vpc_cidr_block, 8, k + length(dependency.data.outputs.first_3_azs))]
+  intra_subnets   = [for k, v in dependency.data.outputs.first_3_azs : cidrsubnet(local.vpc_cidr_block, 8, k + length(dependency.data.outputs.first_3_azs) * 2)]
 
   enable_dns_hostnames = true
   enable_dns_support   = true
