@@ -14,7 +14,7 @@ variable "enable_cluster_autoscaler" {
   default     = false
 }
 
-variable "cluster_autoscaler_helm_verion" {
+variable "cluster_autoscaler_helm_version" {
   description = "Cluster Autoscaler Helm verion"
   type        = string
 }

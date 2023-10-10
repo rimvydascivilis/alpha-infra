@@ -70,7 +70,7 @@ resource "helm_release" "cluster_autoscaler" {
   repository = "https://kubernetes.github.io/autoscaler"
   chart      = "cluster-autoscaler"
   namespace  = "kube-system"
-  version    = var.cluster_autoscaler_helm_verion
+  version    = var.cluster_autoscaler_helm_version
 
   set {
     name  = "rbac.serviceAccount.name"

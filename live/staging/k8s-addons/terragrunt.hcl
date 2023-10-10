@@ -17,7 +17,7 @@ inputs = {
   openid_provider_arn = dependency.eks.outputs.oidc_provider_arn
 
   enable_cluster_autoscaler      = true
-  cluster_autoscaler_helm_verion = "9.29.3"
+  cluster_autoscaler_helm_version = "9.29.3"
 }
 
 dependency "eks" {
