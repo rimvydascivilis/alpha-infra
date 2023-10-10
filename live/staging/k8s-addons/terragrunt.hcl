@@ -7,16 +7,16 @@ include "root" {
 }
 
 locals {
-  common_vars  = read_terragrunt_config(find_in_parent_folders("common_vars.hcl")).locals
-  env          = local.common_vars.env
+  common_vars = read_terragrunt_config(find_in_parent_folders("common_vars.hcl")).locals
+  env         = local.common_vars.env
 }
 
 inputs = {
-  env      = local.env
-  eks_name = dependency.eks.outputs.cluster_name
+  env                 = local.env
+  eks_name            = dependency.eks.outputs.cluster_name
   openid_provider_arn = dependency.eks.outputs.oidc_provider_arn
 
-  enable_cluster_autoscaler      = true
+  enable_cluster_autoscaler       = true
   cluster_autoscaler_helm_version = "9.29.3"
 }
 
