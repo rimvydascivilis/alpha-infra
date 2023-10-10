@@ -42,12 +42,10 @@ inputs = {
 
   private_subnet_tags = {
     "kubernetes.io/role/internal-elb"    = 1
-    "kubernetes.io/cluster/${local.env}" = "owned"
   }
 
   public_subnet_tags = {
     "kubernetes.io/role/elb"             = 1
-    "kubernetes.io/cluster/${local.env}" = "owned"
   }
 
   tags = local.common_tags
