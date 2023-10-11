@@ -30,6 +30,10 @@ resource "helm_release" "argocd" {
   }
 
   set {
+    name  = "server.ingress.ingressClassName"
+    value = "alb"
+  }
+  set {
     name  = "server.ingress.annotations.alb\\.ingress\\.kubernetes\\.io/scheme"
     value = "internet-facing"
   }
