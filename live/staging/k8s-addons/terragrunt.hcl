@@ -22,6 +22,13 @@ inputs = {
   enable_load_balancer_controller       = true
   load_balancer_controller_helm_version = "1.6.1"
   load_balancer_controller_image_tag    = "v2.6.1"
+
+  enable_argocd         = true
+  enable_argocd_ingress = true
+  argocd_ingress_hosts  = ["argocd.${local.env}.example.com"]
+  argocd_ingress_paths  = ["/"]
+  argocd_helm_version   = "5.46.7"
+  argocd_image_tag      = "v2.8.4"
 }
 
 dependency "eks" {

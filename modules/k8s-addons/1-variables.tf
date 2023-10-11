@@ -39,3 +39,35 @@ variable "load_balancer_controller_image_tag" {
   description = "Load Balancer Controller image tag"
   type        = string
 }
+
+variable "enable_argocd" {
+  description = "Determines whether to deploy ArgoCD"
+  type        = bool
+  default     = false
+}
+
+variable "enable_argocd_ingress" {
+  description = "Determines whether to deploy ArgoCD ingress"
+  type        = bool
+  default     = false
+}
+
+variable "argocd_ingress_hosts" {
+  description = "ArgoCD ingress hosts"
+  type        = list(string)
+}
+
+variable "argocd_ingress_paths" {
+  description = "ArgoCD ingress paths"
+  type        = list(string)
+}
+
+variable "argocd_helm_version" {
+  description = "ArgoCD Helm verion"
+  type        = string
+}
+
+variable "argocd_image_tag" {
+  description = "ArgoCD image tag"
+  type        = string
+}
