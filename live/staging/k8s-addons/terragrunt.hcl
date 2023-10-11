@@ -25,8 +25,8 @@ inputs = {
 
   enable_argocd         = true
   enable_argocd_ingress = true
-  argocd_ingress_hosts  = ["argocd.${local.env}.example.com"]
-  argocd_ingress_paths  = ["/"]
+  argocd_ingress_host   = "argocd.${local.env}.example.com"
+  argocd_ingress_path   = "/"
   argocd_helm_version   = "5.46.7"
   argocd_image_tag      = "v2.8.4"
 }

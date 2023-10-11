@@ -20,20 +20,28 @@ resource "helm_release" "argocd" {
   }
 
   set {
-    name  = "server.ingress.hosts"
-    value = var.argocd_ingress_hosts
+    name  = "server.ingress.hosts[0]"
+    value = var.argocd_ingress_host
   }
 
   set {
-    name  = "server.ingress.paths"
-    value = var.argocd_ingress_paths
+    name  = "server.ingress.paths[0]"
+    value = var.argocd_ingress_path
   }
 
   set {
-    name = "server.ingress.annotations"
-    value = {
-      "alb.ingress.kubernetes.io/scheme" = "internet-facing"
-    }
+    name  = "server.ingress.annotations.alb\\.ingress\\.kubernetes\\.io/scheme"
+    value = "internet-facing"
+  }
+
+  set {
+    name  = "server.ingress.annotations.alb\\.ingress\\.kubernetes\\.io/group\\.name"
+    value = "default"
+  }
+
+  set {
+    name  = "server.ingress.annotations.alb\\.ingress\\.kubernetes\\.io/group\\.order"
+    value = "1"
   }
 
   set {
@@ -42,7 +50,7 @@ resource "helm_release" "argocd" {
   }
 
   set {
-    name  = "server.extraArgs"
-    value = ["--insecure"]
+    name  = "server.extraArgs[0]"
+    value = "--insecure"
   }
 }

@@ -52,14 +52,14 @@ variable "enable_argocd_ingress" {
   default     = false
 }
 
-variable "argocd_ingress_hosts" {
-  description = "ArgoCD ingress hosts"
-  type        = list(string)
+variable "argocd_ingress_host" {
+  description = "ArgoCD ingress host"
+  type        = string
 }
 
-variable "argocd_ingress_paths" {
-  description = "ArgoCD ingress paths"
-  type        = list(string)
+variable "argocd_ingress_path" {
+  description = "ArgoCD ingress path"
+  type        = string
 }
 
 variable "argocd_helm_version" {
