@@ -34,7 +34,7 @@ resource "helm_release" "argocd" {
         value = "alb"
       },
       {
-        name = "server.ingress.annotations.alb\\.ingress\\.kubernetes\\.io/scheme"
+        name  = "server.ingress.annotations.alb\\.ingress\\.kubernetes\\.io/scheme"
         value = "internet-facing"
       },
       {
@@ -60,5 +60,46 @@ resource "helm_release" "argocd" {
   set {
     name  = "server.extraArgs[0]"
     value = "--insecure"
+  }
+
+  depends_on = [ helm_release.aws_load_balancer_controller ]
+}
+
+resource "kubernetes_manifest" "argocd_apps" {
+  count = var.enable_argocd ? length(var.argocd_apps) : 0
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
+    metadata = {
+      name      = var.argocd_apps[count.index].name
+      namespace = "argocd"
+      finalizers = [
+        "resources-finalizer.argocd.argoproj.io"
+      ]
+    }
+    spec = {
+      project = var.argocd_apps[count.index].project
+      source = {
+        repoURL        = var.argocd_apps[count.index].repo_url
+        targetRevision = var.argocd_apps[count.index].target_revision
+        path           = var.argocd_apps[count.index].path
+      }
+      destination = {
+        server    = var.argocd_apps[count.index].destination_server
+      }
+      syncPolicy = {
+        automated = {
+          prune      = true
+          selfHeal   = true
+          allowEmpty = true
+        }
+        syncOptions = [
+          "Validate=true",
+          "CreateNamespace=true",
+          "PrunePropagationPolicy=Foreground",
+          "PruneLast=true",
+        ]
+      }
+    }
   }
 }
