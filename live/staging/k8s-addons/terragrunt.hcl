@@ -35,8 +35,8 @@ dependency "eks" {
   config_path = "../eks"
 
   mock_outputs = {
-    eks_name            = "cluster"
-    openid_provider_arn = "arn:aws:iam::123456789012:oidc-provider"
+    cluster_name            = "cluster"
+    oidc_provider_arn = "arn:aws:iam::123456789012:oidc-provider"
   }
 }
 
