@@ -19,38 +19,42 @@ resource "helm_release" "argocd" {
     value = var.enable_argocd_ingress
   }
 
-  set {
-    name  = "server.ingress.hosts[0]"
-    value = var.argocd_ingress_host
-  }
+  dynamic "set" {
+    for_each = var.enable_argocd_ingress ? [
+      {
+        name  = "server.ingress.hosts[0]"
+        value = var.argocd_ingress_host
+      },
+      {
+        name  = "server.ingress.paths[0]"
+        value = var.argocd_ingress_path
+      },
+      {
+        name  = "server.ingress.ingressClassName"
+        value = "alb"
+      },
+      {
+        name = "server.ingress.annotations.alb\\.ingress\\.kubernetes\\.io/scheme"
+        value = "internet-facing"
+      },
+      {
+        name  = "server.ingress.annotations.alb\\.ingress\\.kubernetes\\.io/group\\.name"
+        value = "default"
+      },
+      {
+        name  = "server.ingress.annotations.alb\\.ingress\\.kubernetes\\.io/group\\.order"
+        value = "1"
+      }
+    ] : []
 
-  set {
-    name  = "server.ingress.paths[0]"
-    value = var.argocd_ingress_path
+    content {
+      name  = set.value.name
+      value = set.value.value
+    }
   }
-
-  set {
-    name  = "server.ingress.ingressClassName"
-    value = "alb"
-  }
-  set {
-    name  = "server.ingress.annotations.alb\\.ingress\\.kubernetes\\.io/scheme"
-    value = "internet-facing"
-  }
-
-  set {
-    name  = "server.ingress.annotations.alb\\.ingress\\.kubernetes\\.io/group\\.name"
-    value = "default"
-  }
-
-  set {
-    name  = "server.ingress.annotations.alb\\.ingress\\.kubernetes\\.io/group\\.order"
-    value = "1"
-  }
-
   set {
     name  = "server.service.type"
-    value = "NodePort"
+    value = var.enable_argocd_ingress ? "NodePort" : "ClusterIP"
   }
 
   set {
