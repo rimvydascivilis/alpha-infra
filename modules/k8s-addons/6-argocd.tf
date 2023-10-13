@@ -62,7 +62,7 @@ resource "helm_release" "argocd" {
     value = "--insecure"
   }
 
-  depends_on = [ helm_release.aws_load_balancer_controller ]
+  depends_on = [helm_release.aws_load_balancer_controller]
 }
 
 resource "kubernetes_manifest" "argocd_apps" {
@@ -85,7 +85,7 @@ resource "kubernetes_manifest" "argocd_apps" {
         path           = var.argocd_apps[count.index].path
       }
       destination = {
-        server    = var.argocd_apps[count.index].destination_server
+        server = var.argocd_apps[count.index].destination_server
       }
       syncPolicy = {
         automated = {
