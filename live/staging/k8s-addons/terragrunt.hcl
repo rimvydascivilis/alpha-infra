@@ -23,13 +23,26 @@ inputs = {
   load_balancer_controller_helm_version = "1.6.1"
   load_balancer_controller_image_tag    = "v2.6.1"
 
-  enable_argocd = true
-  argocd_apps = []
+  enable_argocd         = true
+  argocd_apps           = []
   enable_argocd_ingress = true
   argocd_ingress_host   = "argocd.${local.env}.example.com"
   argocd_ingress_path   = "/"
   argocd_helm_version   = "5.46.7"
   argocd_image_tag      = "v2.8.4"
+
+  enable_argocd_image_updater = true
+  argocd_image_updater_config = {
+    helm_version = "0.9.1"
+    image_tag    = "v0.12.2"
+    ecr = {
+      region = split(".", dependency.ecr.outputs.repository_url)[3]
+      url    = split("/", dependency.ecr.outputs.repository_url)[0]
+    }
+  }
+
+  enable_sealed_secrets       = true
+  sealed_secrets_helm_version = "1.5.7"
 }
 
 dependency "eks" {
@@ -38,6 +51,14 @@ dependency "eks" {
   mock_outputs = {
     cluster_name      = "cluster"
     oidc_provider_arn = "arn:aws:iam::123456789012:oidc-provider"
+  }
+}
+
+dependency "ecr" {
+  config_path = "../ecr"
+
+  mock_outputs = {
+    repository_url = "012345678901.dkr.ecr.us-east-1.amazonaws.com/abc"
   }
 }
 

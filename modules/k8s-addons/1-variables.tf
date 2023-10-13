@@ -75,12 +75,37 @@ variable "argocd_image_tag" {
 variable "argocd_apps" {
   description = "ArgoCD apps"
   type = list(object({
-    name                  = string
-    project               = string
-    repo_url              = string
-    target_revision       = string
-    path                  = string
-    destination_server    = string
-    destination_namespace = string
+    name               = string
+    project            = string
+    repo_url           = string
+    target_revision    = string
+    path               = string
+    destination_server = string
   }))
+}
+
+variable "enable_argocd_image_updater" {
+  description = "Determines whether to deploy ArgoCD image updater"
+  type        = bool
+  default     = false
+}
+
+variable "argocd_image_updater_config" {
+  description = "ArgoCD image updater config"
+  type = object({
+    helm_version = string
+    image_tag    = string
+    ecr          = any
+  })
+}
+
+variable "enable_sealed_secrets" {
+  description = "Determines whether to deploy Sealed Secrets"
+  type        = bool
+  default     = false
+}
+
+variable "sealed_secrets_helm_version" {
+  description = "Sealed Secrets Helm verion"
+  type        = string
 }

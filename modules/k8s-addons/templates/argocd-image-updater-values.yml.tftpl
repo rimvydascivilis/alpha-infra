@@ -1,0 +1,39 @@
+---
+image:
+  tag: ${image_tag}
+
+config:
+  registries:
+    - name: DockerHub
+      api_url: https://registry-1.docker.io
+      ping: yes
+      limit: 20
+%{ if ecr == {} }
+      default: true
+%{ else }
+    - name: ECR
+      api_url: https://${ecr.url}
+      prefix: ${ecr.url}
+      default: true
+      ping: yes
+      insecure: no
+      credentials: ext:/scripts/ecr-login.sh
+      credsexpire: 11h
+
+authScripts:
+  enabled: true
+  scripts: 
+    ecr-login.sh: |  
+      #!/bin/sh
+      aws ecr --region $AWS_REGION get-authorization-token --output text --query 'authorizationData[].authorizationToken' | base64 -d
+
+extraEnv:
+  - name: AWS_REGION
+    value: ${ecr.region}
+
+serviceAccount:
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: ${service_account_role_arn}
+  name: "argocd-image-updater"
+%{ endif }
