@@ -6,7 +6,7 @@ data "aws_iam_policy_document" "argocd_image_updater" {
     condition {
       test     = "StringEquals"
       variable = "${replace(data.aws_iam_openid_connect_provider.this.url, "https://", "")}:sub"
-      values   = ["system:serviceaccount:kube-system:argocd-image-updater"]
+      values   = ["system:serviceaccount:argocd:argocd-image-updater"]
     }
 
     principals {
