@@ -13,7 +13,7 @@ locals {
 }
 
 inputs = {
-  repository_name = "app-${local.env}"
+  repository_name = "app"
 
   repository_lifecycle_policy = jsonencode({
     rules = [
