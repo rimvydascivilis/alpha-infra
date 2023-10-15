@@ -65,7 +65,7 @@ inputs = {
       min_size     = 1
       max_size     = 4
 
-      instance_types = ["t2.micro"]
+      instance_types = ["t3.small"]
       capacity_type  = "ON_DEMAND"
     }
   }
