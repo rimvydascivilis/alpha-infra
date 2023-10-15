@@ -14,7 +14,15 @@ locals {
 inputs = {
   eks_name = dependency.k8s-addons.outputs.eks_name
   argocd_apps = [
-
+    {
+      name               = "alpha-k8s",
+      annotations        = {},
+      project            = "default",
+      repo_url           = "https://github.com/rimvydascivilis/alpha-k8s.git",
+      target_revision    = "main",
+      path               = "apps",
+      destination_server = "https://kubernetes.default.svc"
+    }
   ]
 }
 
