@@ -24,7 +24,6 @@ inputs = {
   load_balancer_controller_image_tag    = "v2.6.1"
 
   enable_argocd         = true
-  argocd_apps           = []
   enable_argocd_ingress = true
   argocd_ingress_host   = "argocd.${local.env}.example.com"
   argocd_ingress_path   = "/"
@@ -84,22 +83,6 @@ provider "helm" {
       args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.eks.name]
       command     = "aws"
     }
-  }
-}
-EOF
-}
-
-generate "kubernetes_provider" {
-  path      = "kubernetes-provider.tf"
-  if_exists = "overwrite_terragrunt"
-  contents  = <<EOF
-provider "kubernetes" {
-  host                   = data.aws_eks_cluster.eks.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
-  exec {
-    api_version = "client.authentication.k8s.io/v1beta1"
-    args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.eks.name]
-    command     = "aws"
   }
 }
 EOF
